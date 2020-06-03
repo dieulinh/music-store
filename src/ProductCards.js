@@ -1,11 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
 // import Navigation from './Navigation';
 class Card extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
 
     return (
@@ -16,14 +11,14 @@ class Card extends React.Component {
                     <h4 className="card-title">{this.props.productName}</h4>
                     Price: <strong>{this.props.price}</strong>
                     <p className="card-text">{this.props.desc}</p>
-                    <button className="btn btn-primary">Buy</button>
+                    <button className="btn btn-primary" onClick={() =>this.props.showBuyModal(this.props.id, this.props.price)}>Buy</button>
                 </div>
             </div>
         </div>
     );
   }
 }
-class CardContainer extends React.Component {
+export default class CardContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {cards: []};
@@ -34,8 +29,8 @@ class CardContainer extends React.Component {
     .then((result) => {
       this.setState({cards: result});
     })
-
   }
+  
   render() {
     const cards = this.state.cards;
     const cardItems = cards.map(card => <Card key={card.id} {...card} promo={this.props.promo} showBuyModal={this.props.showBuyModal} />);
@@ -46,10 +41,3 @@ class CardContainer extends React.Component {
     );
   }
 }
-
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-);
-
-
